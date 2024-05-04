@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:    
+  mysql:
+    image: mysql
+    env_file:
+      - ./backend/.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=PIPE
+      - MYSQL_DATABASE=patient_registration
+    ports:
+      - 5000:3306
+
+  server:
+    build: backend/.
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    ports:
+      - 5001:4000

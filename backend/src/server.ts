@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import dotenv from "dotenv";
-import { patientsRouter } from "./routes/patients";
+import { patientsRouter } from "./routes/patients.routes";
 
 dotenv.config();
 const port = process.env.PORT || 3000;
