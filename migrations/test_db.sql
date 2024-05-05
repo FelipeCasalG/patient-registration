@@ -1,9 +1,9 @@
 CREATE DATABASE patient_registration;
 USE patient_registration;
 
-CREATE TABLE patient (
+CREATE TABLE patients (
     id integer PRIMARY KEY AUTO_INCREMENT,
-    name varchar(255) NOT NULL,
+    fullName varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     phoneCharacteristic varchar(255) NOT NULL,
     phoneNumber varchar(255) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE patient (
     created TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-INSERT INTO patient (name, email, address, phoneCharacteristic, phoneNumber, documentPhotoURL) 
+INSERT INTO patients (fullName, email, phoneCharacteristic, phoneNumber, documentPhotoURL) 
 VALUES ('John Doe', 
         'johndoe@gmail.com',
         '598', 

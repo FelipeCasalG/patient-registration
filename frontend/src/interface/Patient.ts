@@ -2,10 +2,10 @@
 
 export interface IPatient {
   id: number;
-  name: string;
+  fullName: string;
   email: string;
   phoneCharacteristic: string;
   phoneNumber: string;
   documentPhotoURL: URL;
-  created: Date;
+  createdAt: Date;
 }

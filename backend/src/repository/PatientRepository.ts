@@ -1,25 +1,10 @@
-import { IPatient } from "../interface/IPatient";
-import { RegisterPatient } from "../interface/RegisterPatientSchema";
-import dbConnection from "./dbConnection";
+import { Patient, type PatientCreationAttributes } from "../db-models/patientModel";
+import { WhereOptions } from "sequelize";
 
-export const getAll = async (): Promise<IPatient[]> => {
-    return new Promise((resolve, reject) => {
-        dbConnection.query<IPatient[]>("SELECT * FROM patient", (err: any, rows: IPatient[] | PromiseLike<IPatient[]>) => {
-            if (err) reject(err);
-            else resolve(rows);
-        });
-    })
+export const getAllPatients = async () => {
+    return await Patient.findAll();
 }
 
-export const create = async (patient: IPatient): Promise<IPatient> => {
-    return new Promise((resolve, reject) => {
-        dbConnection.query("INSERT INTO patient SET ?", patient, (err: any, result: any) => {
-            if (err) reject(err);
-            else {
-                const returnPatient: IPatient = { ...patient };
-                returnPatient.id = result.insertId;
-                resolve(returnPatient);
-            }
-        });
-    });
+export const create = async (patient: PatientCreationAttributes) => {
+    return await Patient.create(patient);
 }

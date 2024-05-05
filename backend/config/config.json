@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "PIPE",
+    "database": "patient_registration",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "PIPE",
+    "database": "patient_registration",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "PIPE",
+    "database": "patient_registration",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

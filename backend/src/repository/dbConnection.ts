@@ -1,11 +1,25 @@
-import dotenv from "dotenv";
-import mysql from "mysql2";
+import { Sequelize } from 'sequelize-typescript';
+import * as models from '../db-models';
 
-dotenv.config();
-
-export default mysql.createPool({
-    host: process.env.DB_HOST || "127.0.0.1",
-    user: process.env.DB_USER,
+const config = {
+    name: process.env.DB_NAME!,
+    user: process.env.DB_USER!,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    host: process.env.DB_HOST,
+};
+
+export const sequelize = new Sequelize(config.name, config.user, config.password, {
+    host: config.host,
+    dialect: 'mysql',
+    models: Object.values(models),
+    logging: false
 });
+
+export const initMySQLDb = async () => {
+    try {
+        await sequelize.authenticate();
+        return true;
+    } catch (error) {
+        return false;
+    }
+};

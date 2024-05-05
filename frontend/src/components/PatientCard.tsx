@@ -15,7 +15,7 @@ function PatientCard({ patient }: { patient: IPatient }) {
       </CardHeader>
       <CardBody>
         <Typography variant='h4' color='blue-gray'>
-          {patient.name}
+          {patient.fullName}
         </Typography>
 
         <Button onClick={handleCollapseBtn}>{isCollapsed ? "More info" : "Hide info"}</Button>
@@ -26,7 +26,7 @@ function PatientCard({ patient }: { patient: IPatient }) {
                 Email: {patient.email} <br />
                 Country code: +{patient.phoneCharacteristic} <br />
                 Phone number: {patient.phoneNumber} <br />
-                Date created: {patient.created.toString()} <br />
+                Date created: {patient.createdAt.toString()} <br />
               </Typography>
             </CardBody>
           </Card>

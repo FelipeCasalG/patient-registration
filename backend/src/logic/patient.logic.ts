@@ -1,11 +1,20 @@
+import { PatientCreationAttributes } from "../db-models/patientModel";
 import { IPatient } from "../interface/IPatient";
 import { RegisterPatient } from "../interface/RegisterPatientSchema";
-import { getAll, create } from "../repository/PatientRepository";
+import { getAllPatients, create } from "../repository/PatientRepository";
 import { sendMail } from "../utils/mailer";
 import fs from "fs";
 
-export const getAllPatients = async () => {
-    return await getAll();
+export const getPatients = async () => {
+    try {
+        const patients = await getAllPatients();
+        console.log(patients);
+        return patients;
+    }
+    catch (err) {
+        console.error(err);
+        return [];
+    }
 }
 
 const sendRegistrationConfirmationMail = async (email: string, name: string) => {
@@ -18,12 +27,18 @@ const sendRegistrationConfirmationMail = async (email: string, name: string) => 
     });
 }
 
-
 export const createPatient = async (patient: RegisterPatient) => {
-    const { documentPhoto, ...restPatient } = patient;
-    // TODO: Upload photo to cloud storage and get the URL
-    const documentPhotoURL = "https://www.mass.gov/files/styles/embedded_full_width/public/images/2024-02/ma_d200_pr_adult_lid_150dpi-_liquor_card_2.jpg?itok=z0dKZLGF";
-    const createdPatient: IPatient = await create({ ...restPatient, documentPhotoURL });
-    sendRegistrationConfirmationMail(patient.email, patient.fullName);
+    const documentPhotoURL = "https://images.foxtv.com/static.fox29.com/www.fox29.com/content/uploads/2022/09/764/432/license.jpg";
+    const newPatient: PatientCreationAttributes = {
+        fullName: patient.fullName,
+        email: patient.email,
+        phoneCharacteristic: patient.phoneCharacteristic,
+        phoneNumber: patient.phoneNumber,
+        documentPhotoURL: documentPhotoURL,
+    };
+    const createdPatient = await create(newPatient);
+    if (createdPatient) {
+        sendRegistrationConfirmationMail(patient.email, patient.fullName);
+    }
     return createdPatient;
 }
