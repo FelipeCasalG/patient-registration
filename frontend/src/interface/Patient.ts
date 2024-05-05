@@ -4,9 +4,8 @@ export interface IPatient {
   id: number;
   name: string;
   email: string;
-  address: string;
   phoneCharacteristic: string;
   phoneNumber: string;
-  documentPhoto: Blob;
+  documentPhotoURL: URL;
   created: Date;
 }

@@ -1,12 +1,11 @@
 import { RowDataPacket } from "mysql2";
 
 export interface IPatient extends RowDataPacket {
-    id: number;
-    name: string;
+    id?: number;
+    fullName: string;
     email: string;
-    address: string;
     phoneCharacteristic: string;
     phoneNumber: string;
-    documentPhoto: Blob;
-    created: Date;
+    documentPhotoURL: string;
+    created?: Date;
 }

@@ -13,29 +13,22 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const sendMail = async (to: string, subject: string, patientName: string) => {
-    fs.readFile("src/html-templates/registration-confirmation.html", "utf8", async (err, html) => {
+const sendMail = async (to: string, subject: string, html: string) => {
+
+    const mailOptions: SendMailOptions = {
+        from: process.env.MAILTRAP_SEND_DOMAIN,
+        to: to,
+        subject: subject,
+        html: html
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
             console.error(err);
             return;
         }
-
-        const mailOptions: SendMailOptions = {
-            from: process.env.MAILTRAP_SEND_DOMAIN,
-            to: to,
-            subject: subject,
-            html: html.replace("{{patientName}}", patientName)
-        };
-
-        transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-        });
-
     });
-    
+
 };
 
 export { sendMail };

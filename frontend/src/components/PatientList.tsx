@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IPatient } from "../interface/Patient";
 import PatientCard from "./PatientCard";
-import { getAllPatients } from "../api/patient.api";
+import { getAllPatients } from "../api/patient/patient.api";
 import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
