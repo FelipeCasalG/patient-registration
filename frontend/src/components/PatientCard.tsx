@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IPatient } from "../interface/Patient";
-import { Button, Card, CardBody, CardFooter, CardHeader, Collapse, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, CardHeader, Collapse, Typography } from "@material-tailwind/react";
 
 function PatientCard({ patient }: { patient: IPatient }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -21,7 +21,7 @@ function PatientCard({ patient }: { patient: IPatient }) {
           {patient.name}
         </Typography>
 
-        <Button onClick={handleCollapseBtn}>{isCollapsed ? "Less info" : "More info"}</Button>
+        <Button onClick={handleCollapseBtn}>{isCollapsed ? "More info" : "Hide info"}</Button>
         <Collapse open={!isCollapsed}>
           <Card className='my-4 mx-auto w-12/12'>
             <CardBody>

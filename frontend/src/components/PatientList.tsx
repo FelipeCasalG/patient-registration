@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { IPatient } from "../interface/Patient";
 import PatientCard from "./PatientCard";
 import { getAllPatients } from "../api/patient.api";
+import { Button } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 function PatientList() {
   const [patients, setPatients] = useState<IPatient[]>([]);
@@ -9,7 +11,7 @@ function PatientList() {
   useEffect(() => {
     const getPatients = async () => {
       try {
-        const data = await getAllPatients();
+        const data: IPatient[] = await getAllPatients();
         setPatients(data);
       } catch (e: unknown) {
         console.error(e);
@@ -20,12 +22,27 @@ function PatientList() {
   }, []);
 
   return (
-    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3'>
-      {patients.map((patient) => (
-        <div key={patient.id}>
-          <PatientCard patient={patient} />
+    <div className='h-full'>
+      {patients.length > 0 ? (
+        <div>
+          <div className='mt-4'>
+            <Link to='/register-patient'>
+              <Button variant='outlined'>Register patient</Button>
+            </Link>
+          </div>
+          <div className='mt-4 g id grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3'>
+            {patients.map((patient: IPatient) => (
+              <div key={patient.id}>
+                <PatientCard patient={patient} />
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
+      ) : (
+        <div className='flex items-center justify-center h-full'>
+          <h1 className='text-3xl font-bold'>No patients found</h1>
+        </div>
+      )}
     </div>
   );
 
