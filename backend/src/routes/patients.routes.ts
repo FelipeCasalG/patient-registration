@@ -1,6 +1,4 @@
 import { Router, Request, Response } from "express";
-import { IPatient } from "../interface/IPatient";
-import { sendMail } from "../utils/mailer";
 import { RegisterPatientSchema, RegisterPatient } from "../interface/RegisterPatientSchema";
 import { getPatients, createPatient } from "../logic/patient.logic";
 import { Patient } from "../db-models/patientModel";
@@ -22,8 +20,6 @@ patientsRouter.get("/", async (req: Request, res: Response) => {
 
 patientsRouter.post("/", upload.single("documentPhoto"), async (req: Request, res: Response) => {
     try {
-        console.log(req.body);
-        console.log(req.file);
         if (!req.file) {
             return res.status(400).send("File is required");
         }
@@ -35,7 +31,7 @@ patientsRouter.post("/", upload.single("documentPhoto"), async (req: Request, re
             documentPhoto: new File([req.file.buffer], req.file.originalname, { type: req.file.mimetype }),
         };
         const patient: RegisterPatient = RegisterPatientSchema.parse(patientSchema);
-        const newPatient: Patient = await createPatient(patient);
+        const newPatient: Patient | null = await createPatient(patient, req.file);
         res.status(201).json(newPatient);
     } catch (err) {
         res.status(500).send(err);

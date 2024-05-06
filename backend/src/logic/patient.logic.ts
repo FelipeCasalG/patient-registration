@@ -1,9 +1,10 @@
 import { PatientCreationAttributes } from "../db-models/patientModel";
-import { IPatient } from "../interface/IPatient";
 import { RegisterPatient } from "../interface/RegisterPatientSchema";
 import { getAllPatients, create } from "../repository/PatientRepository";
+import uploadFileToCloudinary from "../utils/cloudinary";
 import { sendMail } from "../utils/mailer";
 import fs from "fs";
+import path from "path";
 
 export const getPatients = async () => {
     try {
@@ -27,8 +28,18 @@ const sendRegistrationConfirmationMail = async (email: string, name: string) => 
     });
 }
 
-export const createPatient = async (patient: RegisterPatient) => {
-    const documentPhotoURL = "https://images.foxtv.com/static.fox29.com/www.fox29.com/content/uploads/2022/09/764/432/license.jpg";
+const saveFile = async (file: Express.Multer.File): Promise<string> => {
+    const uploadDirectory = 'img/';
+    fs.mkdirSync(uploadDirectory, { recursive: true });
+    const filename = Date.now() + '-' + file.originalname;
+    const filePath = path.join(uploadDirectory, filename);
+    fs.writeFileSync(filePath, file.buffer);
+    return filePath;
+}
+
+export const createPatient = async (patient: RegisterPatient, file: Express.Multer.File) => {
+    const localFilePath = await saveFile(file);
+    const documentPhotoURL = await uploadFileToCloudinary(localFilePath);
     const newPatient: PatientCreationAttributes = {
         fullName: patient.fullName,
         email: patient.email,

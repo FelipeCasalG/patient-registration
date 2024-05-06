@@ -11,16 +11,12 @@ const getAllPatients = async (): Promise<IPatient[]> => {
 };
 
 const createPatient = async (patient: RegisterPatient): Promise<void> => {
-    console.log(patient);
     const formData = new FormData();
     formData.append("fullName", patient.fullName);
     formData.append("email", patient.email);
     formData.append("phoneCharacteristic", patient.phoneCharacteristic);
     formData.append("phoneNumber", patient.phoneNumber);
     formData.append("documentPhoto", patient.documentPhoto);
-    console.log(formData);
-    console.log(formData.getAll("fullName"));
-    console.log(formData.getAll("documentPhoto"));
     await axios.post(REACT_APP_API_BASE_URL + "/patients", formData, {
         headers: {
             "Content-Type": "multipart/form-data",

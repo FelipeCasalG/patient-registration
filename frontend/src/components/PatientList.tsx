@@ -26,30 +26,39 @@ function PatientList() {
   return (
     <div className='h-full flex justify-center'>
       <div>
-        <div className='mt-4 flex-row w-full items-center text-center'>
-          <Typography variant='h1' className='mx-auto'>
-            Patients
-          </Typography>
-          <div className='mt-2 md:text-right md:-mt-12'>
-            <Button variant='outlined' onClick={() => navigate("/register-patient")}>
-              Register patient
-            </Button>
-          </div>
-        </div>
-
         {patients.length > 0 ? (
-          <div className='flex justify-center'>
-            <div className='mt-4 grid lg:grid-cols-3 gap-4 sm:grid-cols-1 md:grid-cols-2'>
-              {patients.map((patient: IPatient) => (
-                <div key={patient.id}>
-                  <PatientCard patient={patient} />
-                </div>
-              ))}
+          <div>
+            <div className='mt-4 flex-row w-full items-center text-center'>
+              <Typography variant='h1' className='mx-auto'>
+                Patients
+              </Typography>
+              <div className='mt-2 md:text-right md:-mt-12'>
+                <Button variant='outlined' onClick={() => navigate("/register-patient")}>
+                  Register patient
+                </Button>
+              </div>
+            </div>
+
+            <div className='flex justify-center'>
+              <div className='mt-4 grid lg:grid-cols-3 gap-4 sm:grid-cols-1 md:grid-cols-2'>
+                {patients.map((patient: IPatient) => (
+                  <div key={patient.id}>
+                    <PatientCard patient={patient} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         ) : (
-          <div className='flex items-center justify-center h-full'>
-            <h1 className='text-3xl font-bold'>No patients found</h1>
+          <div className='h-full flex justify-center items-center'>
+            <div className='text-center'>
+              <Typography variant='h2' className='mb-4'>
+                No patients found
+              </Typography>
+              <Button size='lg' onClick={() => navigate("/register-patient")}>
+                Register patient
+              </Button>
+            </div>
           </div>
         )}
       </div>
