@@ -4,8 +4,12 @@ import { sendMail } from "../utils/mailer";
 import { RegisterPatientSchema, RegisterPatient } from "../interface/RegisterPatientSchema";
 import { getPatients, createPatient } from "../logic/patient.logic";
 import { Patient } from "../db-models/patientModel";
+import multer from "multer";
 
 export const patientsRouter: Router = Router();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 patientsRouter.get("/", async (req: Request, res: Response) => {
     try {
@@ -16,9 +20,21 @@ patientsRouter.get("/", async (req: Request, res: Response) => {
     }
 });
 
-patientsRouter.post("/", async (req: Request, res: Response) => {
+patientsRouter.post("/", upload.single("documentPhoto"), async (req: Request, res: Response) => {
     try {
-        const patient: RegisterPatient = RegisterPatientSchema.parse(req.body);
+        console.log(req.body);
+        console.log(req.file);
+        if (!req.file) {
+            return res.status(400).send("File is required");
+        }
+        const patientSchema: RegisterPatient = {
+            fullName: req.body.fullName,
+            email: req.body.email,
+            phoneCharacteristic: req.body.phoneCharacteristic,
+            phoneNumber: req.body.phoneNumber,
+            documentPhoto: new File([req.file.buffer], req.file.originalname, { type: req.file.mimetype }),
+        };
+        const patient: RegisterPatient = RegisterPatientSchema.parse(patientSchema);
         const newPatient: Patient = await createPatient(patient);
         res.status(201).json(newPatient);
     } catch (err) {

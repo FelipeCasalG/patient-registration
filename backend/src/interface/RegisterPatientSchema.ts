@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-const onlyLetters = /^[a-zA-Z]+$/;
+const onlyLetters = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+$/;
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
-const ACCEPTED_FILE_TYPES = ['image/jpg'];
+const ACCEPTED_FILE_TYPES = ['image/jpg', 'image/jpeg'];
 
 export const RegisterPatientSchema = z
     .object({

@@ -10,12 +10,38 @@ services:
       - MYSQL_DATABASE=patient_registration
     ports:
       - 5000:3306
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - backend
 
   server:
-    build: backend/.
     depends_on:
       - mysql
+    build: ./backend
     links:
       - mysql
     ports:
       - 5001:4000
+    networks:
+      - backend
+      - frontend
+    
+  ui:
+    depends_on:
+      - server
+    build:
+      context: ./frontend
+      args:
+        - REACT_APP_API_BASE_URL=http://localhost:5001
+    ports:
+      - 80:5173
+    networks:
+      - frontend
+
+volumes: 
+  db:
+
+networks:
+  backend:
+  frontend:

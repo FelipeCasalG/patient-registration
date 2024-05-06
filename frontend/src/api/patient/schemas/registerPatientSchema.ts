@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const onlyLetters = /^[a-zA-Z]+$/;
+const onlyLetters = /^[a-zA-Z\s]/;
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
 const ACCEPTED_FILE_TYPES = ['image/jpg'];
 

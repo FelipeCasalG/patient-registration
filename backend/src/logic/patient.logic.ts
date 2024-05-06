@@ -8,7 +8,6 @@ import fs from "fs";
 export const getPatients = async () => {
     try {
         const patients = await getAllPatients();
-        console.log(patients);
         return patients;
     }
     catch (err) {
@@ -23,6 +22,7 @@ const sendRegistrationConfirmationMail = async (email: string, name: string) => 
             console.error(err);
             return;
         }
+        html = html.replace("{{name}}", name);
         sendMail(email, "Registration Confirmation", html);
     });
 }

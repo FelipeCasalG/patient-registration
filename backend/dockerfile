@@ -1,6 +1,6 @@
 FROM node:20
 
-WORKDIR /patient-registration-server
+WORKDIR /patient-registration-server/backend
 COPY package.json .
 RUN npm install
 

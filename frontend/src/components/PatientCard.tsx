@@ -10,23 +10,29 @@ function PatientCard({ patient }: { patient: IPatient }) {
   };
   return (
     <Card className='max-w-[24rem] overflow-hidden'>
-      <CardHeader floated={false} shadow={false} color='transparent' className='m-0 rounded-none'>
-        <img src={patient.documentPhotoURL.toString()} alt='Patient Document Photo' />
+      <CardHeader floated={false} shadow={false} color='transparent' className='m-0 rounded-none h-60'>
+        <img
+          className='w-full h-full object-cover'
+          src={patient.documentPhotoURL.toString()}
+          alt='Patient Document Photo'
+        />
       </CardHeader>
       <CardBody>
-        <Typography variant='h4' color='blue-gray'>
-          {patient.fullName}
-        </Typography>
-
-        <Button onClick={handleCollapseBtn}>{isCollapsed ? "More info" : "Hide info"}</Button>
+        <div className='flex w-full items-center'>
+          <Typography className='pl-2' variant='h4' color='blue-gray'>
+            {patient.fullName}
+          </Typography>
+          <Button className='ml-auto' onClick={handleCollapseBtn}>
+            {isCollapsed ? "More info" : "Hide info"}
+          </Button>
+        </div>
         <Collapse open={!isCollapsed}>
-          <Card className='my-4 mx-auto w-12/12'>
+          <Card className='my-4 mx-auto w-full'>
             <CardBody>
               <Typography>
                 Email: {patient.email} <br />
                 Country code: +{patient.phoneCharacteristic} <br />
                 Phone number: {patient.phoneNumber} <br />
-                Date created: {patient.createdAt.toString()} <br />
               </Typography>
             </CardBody>
           </Card>
