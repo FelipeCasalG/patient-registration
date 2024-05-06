@@ -2,7 +2,7 @@ import { PatientCreationAttributes } from "../db-models/patientModel";
 import { RegisterPatient } from "../interface/RegisterPatientSchema";
 import { getAllPatients, create } from "../repository/PatientRepository";
 import uploadFileToCloudinary from "../utils/cloudinary";
-import { sendMail } from "../utils/mailer";
+import { EmailNotificationService } from "../utils/emailNotificationService";
 import fs from "fs";
 import path from "path";
 
@@ -23,8 +23,9 @@ const sendRegistrationConfirmationMail = async (email: string, name: string) => 
             console.error(err);
             return;
         }
-        html = html.replace("{{name}}", name);
-        sendMail(email, "Registration Confirmation", html);
+        html = html.replace("{{patientName}}", name);
+        const emailNotificationService = new EmailNotificationService();
+        emailNotificationService.sendNotification(email, html, "Registration Confirmation");
     });
 }
 
