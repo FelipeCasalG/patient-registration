@@ -8,5 +8,6 @@ CREATE TABLE patients (
     phoneCharacteristic varchar(255) NOT NULL,
     phoneNumber varchar(255) NOT NULL,
     documentPhotoURL  VARCHAR(255) NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT NOW()
+    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
+    updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
