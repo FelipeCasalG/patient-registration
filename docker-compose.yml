@@ -22,12 +22,11 @@ services:
     links:
       - mysql
     ports:
-      - 5001:4000
+      - 4000:5001
     networks:
       - backend
-      - frontend
-    
-  ui:
+
+  frontend:
     depends_on:
       - server
     build:
@@ -35,9 +34,9 @@ services:
       args:
         - REACT_APP_API_BASE_URL=http://localhost:5001
     ports:
-      - 80:5173
+      - 8080:5173
     networks:
-      - frontend
+      - frontend  
 
 volumes: 
   db:
